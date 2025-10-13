@@ -19,6 +19,10 @@ set(SRC_FILES
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 
+# Library for math operations
+add_library(math_operations STATIC ${CMAKE_SOURCE_DIR}/math_operations.cpp)
+target_include_directories(math_operations PUBLIC ${CMAKE_SOURCE_DIR})
+
 # Compiler warnings (best-effort)
 if(MSVC)
 	target_compile_options(${PROJECT_NAME} PRIVATE /W4 /permissive-)
@@ -32,4 +36,21 @@ install(TARGETS ${PROJECT_NAME}
 
 message(STATUS "Project: ${PROJECT_NAME} v${PROJECT_VERSION}")
 message(STATUS "C++ standard: ${CMAKE_CXX_STANDARD}")
+
+# --- GoogleTest and unit tests ---
+include(FetchContent)
+FetchContent_Declare(
+	googletest
+	URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+add_executable(unit_tests ${CMAKE_SOURCE_DIR}/tests/unit_tests.cpp)
+target_link_libraries(unit_tests PRIVATE math_operations gtest_main)
+target_include_directories(unit_tests PRIVATE ${CMAKE_SOURCE_DIR})
+
+include(GoogleTest)
+gtest_discover_tests(unit_tests)
 
