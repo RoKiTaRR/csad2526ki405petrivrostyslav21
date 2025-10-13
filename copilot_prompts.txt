@@ -1,0 +1,10 @@
+# Lab 1 Prompts
+
+## Stage 1: main.cpp
+// Simple "Hello World" program in C++
+
+I'll create a todo list to track the steps, then verify main.cpp, compile and run it to confirm the "Hello, world!" output. I'll mark tasks in-progress as I work and update them when done.
+
+Created 2 todos
+
+I'll mark the first todo as in-progress and check the file contents (we already have it in the attachments). Then I'll compile and run the program in a terminal. I'll run the compile and execution commands in a PowerShell terminal. Expected outcome: prints Hello, world!.
