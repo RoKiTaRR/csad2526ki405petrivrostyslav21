@@ -1,0 +1,69 @@
+User:
+
+Batch script for Windows CI: create and enter a new 'build' directory, 
+run 'cmake ..' for configuration, run 'cmake --build .' for building, 
+and finally run 'ctest --output-on-failure'. 
+Ensure the script checks for errors after each major command.
+
+Copilot:
+
+I'll add a new ci.bat at the repo root that creates a fresh build directory, 
+runs CMake configure, builds, and runs tests — checking error codes after each step. 
+Expected outcome: new ci.bat present and ready to run in PowerShell/CMD. 
+I'll (1) write the todo, (2) add the batch script, (3) mark the todo completed.
+
+I'll create ci.bat with robust error checking using %ERRORLEVEL% and exit /b 
+to stop on failure. I'll add comments and ensure it's safe to re-run.
+
+I created a Windows CI batch script ci.bat that configures, builds, and runs tests with error checks after each major step.
+
+What I added
+
+ci.bat at repository root with these steps:
+Remove existing build directory (if present)
+Create a fresh build directory and enter it
+Run cmake .. to configure
+Run cmake --build . to build
+Run ctest --output-on-failure to run tests
+After each step the script checks %ERRORLEVEL% and exits with non-zero status if a step failed
+How to run
+
+Open Command Prompt (cmd.exe) or use a CI runner that executes batch scripts and run:
+ci.bat
+Notes and optional improvements
+
+If you want to force a specific generator (e.g., Visual Studio 17 2022) modify the cmake .. line to:
+cmake -G "Visual Studio 17 2022" ..
+If you need a specific configuration (Debug/Release) add --config Debug to the build and ctest steps when using multi-config generators:
+cmake --build . --config Debug
+ctest -C Debug --output-on-failure
+For CI environments, you might want to add explicit logging, artifact collection, or install steps.
+
+User:
+
+Shell script that runs CI: clean existing build directory, 
+create and enter a new 'build' directory, run 'cmake ..' for configuration, 
+run 'cmake --build .' for building, and finally run 'ctest --output-on-failure'. 
+The script must exit immediately if any command fails.
+
+Copilot:
+
+I'll (1) add a todo for creating the shell CI script, 
+(2) create ci.sh at the repo root with strict error handling (set -euo pipefail + trap), 
+and (3) mark the todo completed. Expected outcome: new ci.sh that exits immediately on any failure.
+
+I added a POSIX shell CI script ci.sh to the repository root. It:
+
+Uses strict mode: set -euo pipefail.
+Installs a trap to print a failure error code if any command fails.
+Removes any existing build directory, creates a fresh one, runs:
+cmake ..
+cmake --build .
+ctest --output-on-failure
+Exits with the actual failing command's exit code.
+How to run (Unix-like shells / Git Bash / WSL / macOS):
+
+Make it executable and run it:
+
+chmod +x ci.sh
+./ci.sh
