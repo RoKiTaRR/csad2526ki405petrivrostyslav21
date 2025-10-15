@@ -68,3 +68,16 @@ target_include_directories(unit_tests PRIVATE ${CMAKE_SOURCE_DIR})
 include(GoogleTest)
 gtest_discover_tests(unit_tests)
 
+# Sanity checks and helper target for CI logs
+if(NOT EXISTS "${CMAKE_SOURCE_DIR}/tests/unit_tests.cpp")
+	message(FATAL_ERROR "Unit test source file tests/unit_tests.cpp not found")
+endif()
+
+message(STATUS "unit_tests target defined: ${unit_tests}")
+
+add_custom_target(print_test_info ALL
+	COMMAND ${CMAKE_COMMAND} -E echo "Expected unit_tests binary (generator expression): $<TARGET_FILE:unit_tests>"
+	COMMENT "Printing expected unit_tests path for CI logs"
+)
+
+

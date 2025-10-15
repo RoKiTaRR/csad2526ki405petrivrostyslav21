@@ -95,9 +95,20 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo Building project...
-REM Allow specifying configuration (Debug/Release) via CMAKE_CONFIG env var for multi-config generators
+REM Determine configuration for multi-config generators on Windows
 if defined CMAKE_CONFIG (
-    cmake --build . --config %CMAKE_CONFIG%
+    set BUILD_CFG=%CMAKE_CONFIG%
+else (
+    if "%OS%"=="Windows_NT" (
+        set BUILD_CFG=Debug
+    ) else (
+        set BUILD_CFG=
+    )
+)
+
+if defined BUILD_CFG (
+    echo Building with configuration: %BUILD_CFG%
+    cmake --build . --config %BUILD_CFG%
 else (
     cmake --build .
 )
@@ -107,7 +118,11 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo Running tests (ctest)...
-ctest --output-on-failure
+if defined BUILD_CFG (
+    ctest -C %BUILD_CFG% --output-on-failure
+else (
+    ctest --output-on-failure
+)
 if %ERRORLEVEL% neq 0 (
     echo Some tests failed.
     exit /b 1
