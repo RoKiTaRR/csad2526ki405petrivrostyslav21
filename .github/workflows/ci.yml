@@ -1,0 +1,40 @@
+name: Cross-Platform CMake CI
+
+on:
+  push:
+    branches:
+      - '*develop*'
+      - '*master*'
+  pull_request:
+    branches:
+      - '*develop*'
+      - '*master*'
+
+jobs:
+  cross_build:
+    name: Build and test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run CI (Linux / macOS)
+        if: runner.os != 'Windows'
+        run: |
+          chmod +x ./ci.sh
+          ./ci.sh
+
+      - name: Run CI (Windows)
+        if: runner.os == 'Windows'
+        run: .\ci.bat
+        shell: cmd
+
+      - name: Deploy
+        run: |
+          echo "Deploy step (placeholder)"
+          echo "Runner OS: $RUNNER_OS"
