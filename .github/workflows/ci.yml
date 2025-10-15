@@ -1,4 +1,4 @@
-name: Cross-Platform CMake CI
+﻿name: Cross-Platform CMake CI
 
 on:
   push:
@@ -12,29 +12,30 @@ on:
 
 jobs:
   cross_build:
-    name: Build and test on ${{ matrix.os }}
+    name: Cross-platform build
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-      fail-fast: false
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run CI (Linux / macOS)
+      - name: Run CI script (Linux/macOS)
         if: runner.os != 'Windows'
         run: |
-          chmod +x ./ci.sh
+          chmod +x ci.sh || true
           ./ci.sh
+        shell: bash
 
-      - name: Run CI (Windows)
+      - name: Run CI script (Windows)
         if: runner.os == 'Windows'
         run: .\ci.bat
         shell: cmd
 
       - name: Deploy
         run: |
-          echo "Deploy step (placeholder)"
-          echo "Runner OS: $RUNNER_OS"
+          echo "Deploy step - replace with actual deployment commands"
+        # Keep the deploy step generic; adjust conditionals or commands as needed.

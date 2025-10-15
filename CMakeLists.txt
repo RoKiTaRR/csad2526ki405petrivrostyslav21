@@ -76,7 +76,7 @@ endif()
 message(STATUS "unit_tests target defined: ${unit_tests}")
 
 add_custom_target(print_test_info ALL
-	COMMAND ${CMAKE_COMMAND} -E echo "Expected unit_tests binary (generator expression): $<TARGET_FILE:unit_tests>"
+	COMMAND ${CMAKE_COMMAND} -E echo "Expected unit_tests binary: $<TARGET_FILE:unit_tests>"
 	COMMENT "Printing expected unit_tests path for CI logs"
 )
 
