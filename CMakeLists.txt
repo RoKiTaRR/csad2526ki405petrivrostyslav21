@@ -38,12 +38,26 @@ message(STATUS "Project: ${PROJECT_NAME} v${PROJECT_VERSION}")
 message(STATUS "C++ standard: ${CMAKE_CXX_STANDARD}")
 
 # --- GoogleTest and unit tests ---
-include(FetchContent)
-FetchContent_Declare(
-	googletest
-	URL https://github.com/google/googletest/archive/refs/heads/main.zip
-)
-FetchContent_MakeAvailable(googletest)
+# Prefer a vendored copy under third_party/googletest for offline builds.
+
+# When building with MSVC, ensure GoogleTest uses the same C runtime as
+# the rest of the project to avoid "RuntimeLibrary" (/MT vs /MD) linker errors.
+if(MSVC)
+	# Force googletest to use the shared CRT (/MD or /MDd depending on config)
+	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
+
+if(EXISTS ${CMAKE_SOURCE_DIR}/third_party/googletest/CMakeLists.txt)
+	message(STATUS "Using vendored GoogleTest from third_party/googletest")
+	add_subdirectory(${CMAKE_SOURCE_DIR}/third_party/googletest ${CMAKE_BINARY_DIR}/third_party/googletest)
+else()
+	include(FetchContent)
+	FetchContent_Declare(
+		googletest
+		URL https://github.com/google/googletest/archive/refs/heads/main.zip
+	)
+	FetchContent_MakeAvailable(googletest)
+endif()
 
 enable_testing()
 
