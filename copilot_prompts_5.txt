@@ -1,0 +1,36 @@
+User: GitHub Actions workflow in YAML. Name: Cross-Platform CMake CI. 
+Trigger on push/pull_request to branches containing 'develop' or 'master'. 
+Create a job 'cross_build' that uses a strategy matrix to run on 'ubuntu-latest', 
+'windows-latest', and 'macos-latest'. The steps must check out the code, 
+run the CI script ci.sh or ci.bat depending on the OS, and then execute a deploy step.
+
+Copilot: I'll add the requested GitHub Actions workflow file  
+.github/workflows/ci.yml with a matrix across ubuntu, windows, and macOS. 
+It will checkout code, run the appropriate CI script per OS, 
+and run a placeholder deploy step. I'll create the file now.
+
+I've added the GitHub Actions workflow Cross-Platform CMake CI at ci.yml.
+
+What it does
+
+Triggers on push and pull_request for branches matching 'develop' or 'master'.
+Runs a job cross_build with a matrix across:
+ubuntu-latest
+windows-latest
+macos-latest
+Steps:
+Checkout the repository
+For Linux/macOS: make ci.sh executable and run it
+For Windows: run ci.bat using cmd
+A final placeholder Deploy step (prints a message). Replace with real deployment commands as needed.
+
+Notes and recommendations
+
+The workflow assumes your repository already contains ci.sh and ci.bat (I added both).
+For Windows, the workflow runs ci.bat in cmd. If you'd rather run PowerShell 
+or use specific Visual Studio generators, I can switch that step to PowerShell and pass additional arguments to the build scripts.
+The placeholder Deploy step is currently a no-op; tell me what you want 
+to run there (upload artifacts, publish a release, push to a server, etc.) and I’ll add it.
+If your CI requires caching (CMake build cache, Conan/vcpkg, or ccache), 
+I can add caching steps to speed up subsequent runs.
+Would you 

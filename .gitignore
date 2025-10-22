@@ -1,0 +1,5 @@
+# VSCode editor settings
+.vscode/
+
+# Compiled executable files
+*.exe

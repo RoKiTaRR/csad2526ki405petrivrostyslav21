@@ -1,0 +1,20 @@
+USER: Fill CMakeLists file
+
+Copilot: I'll read the current CMakeLists.txt to see what's missing and plan edits next. I'll fetch the file contents. Expected outcome: view current CMake configuration so I can fill in a complete CMakeLists.
+
+Read CMakeLists.txt
+
+I'll list project files to see what's present (main.cpp, README, etc.) so I can craft an appropriate CMakeLists. I'll run a directory listing.
+
+Read csad2526ki405petrivrostyslav21
+
+I'll read main.cpp to determine language standard and dependencies so the CMakeLists can be tailored correctly. Expected outcome: ensure CMake uses correct source/files.
+
+Read main.cpp
+
+I'm going to create a short todo list and mark "Create/Fill CMakeLists.txt" in-progress, so we can track steps. Then I'll add the file contents. Expected outcome: plan stored and visible.
+
+Created 4 todos
+
+Now I'll add a reasonable CMakeLists.txt: set minimum version, project name, C++ standard (17), add executable from main.cpp, set output directories, and add install and export targets. I'll apply the patch to update the file. Expected outcome: CMakeLists populated.
+
